@@ -1,0 +1,152 @@
+#include <iostream>
+
+class Figure{
+protected:
+    int x, y;
+    int color;
+
+public:
+
+    std::string get_color() {
+        if (color == 1) return "Red";
+        if (color == 2) return "Blue";
+        if (color == 3) return "Green";
+        if (color == 4) return "Yellow";
+        return "I don't know what color this is";
+    }
+
+    void input(std::string s = "") {
+        if (s == "Red") color = 1;
+        else if (s == "Blue") color = 2;
+        else if (s == "Green") color = 3;
+        else if (s == "Yellow") color = 4;
+        else color = 5;
+    }
+};
+
+class Circle : public Figure {
+private:
+    int r;
+
+public:
+    Circle(int x_ = 0, int y_ = 0, int r_ = 0, std::string s = "") {
+        x = x_, y = y_, r = r_;
+        input(s);
+    }
+
+    double giveOutArea() {
+        return r * 4 * atan(1);
+    }
+
+    void find_rectangle() {
+        std::cout << x - r << " " << y - r << " " << x + r << " " << y + r << std::endl;
+    }
+};
+
+class Triangle : public Figure {
+private:
+    int length;
+
+public:
+    Triangle(int x_ = 0, int y_ = 0, int length_ = 0, std::string s = "") {
+        x = x_, y = y_, length = length_;
+        input(s);
+    }
+
+    double giveOutArea() {
+        return length * length * std::sqrt(3) / 4;
+    }
+
+    void find_rectangle() {
+        std::cout << x - length << " " << y - length << " " << x + length << " " << y + length << std::endl;
+    }
+};
+
+class Rectangle : public Figure {
+protected:
+    int a, b;
+
+public:
+    Rectangle(int x_ = 0, int y_ = 0, int a_ = 0, int b_ = 0, std::string s = "") {
+        x = x_, y = y_, a = a_, b = b_;
+        input(s);
+    }
+
+    int giveOutArea() {
+        return a * b;
+    }
+
+    void find_rectangle() {
+        std::cout << x - a / 2.0 << " " << y - b / 2.0 << " " << x + a / 2.0 << " " << y + b / 2.0 << std::endl;
+    }
+};
+
+class Square : public Figure {
+private:
+    int a;
+
+public:
+    Square(int x_, int y_, int a_ = 0, std::string s = "") {
+        x = x_, y = y_, a = a_;
+        input(s);
+    }
+
+    int giveOutArea() {
+        return a * a;
+    }
+
+    void find_rectangle() {
+        std::cout << x - a / 2.0 << " " << y - a / 2.0 << " " << x + a / 2.0 << " " << y + a / 2.0 << std::endl;
+    }
+};
+
+signed main() {
+    while (true) {
+        std::cout << "Enter \"circle\"\\\"square\"\\\"triangle\"\\\"rectangle\"\\\"exit\" : \n";
+        std::string s; std::cin >> s;
+        if (s == "exit") break;
+        else if (s == "circle") {
+            std::cout << "Enter the coordinates of the shape's center and radius: \n";
+            int x, y, r; std::cin >> x >> y >> r;
+            std::cout << "Enter the color of the shape: (\"Red\", \"Blue\", \"Green\", Yellow\")\n";
+            std::string color; std::cin >> color;
+            Circle* figure = new Circle(x, y, r, color);
+            std::cout << "Area of the figure : " << figure->giveOutArea() << std::endl;
+            std::cout << "Rectangle describing the figure: ";
+            figure->find_rectangle();
+            std::cout << "Figure color: " << figure->get_color() << std::endl;
+        } else if (s == "square") {
+            std::cout << "Enter the coordinates of the shape's center and side length:\n";
+            int x, y, a; std::cin >> x >> y >> a;
+            std::cout << "Enter the color of the shape: (\"Red\", \"Blue\", \"Green\", Yellow\")\n";
+            std::string color; std::cin >> color;
+            Square* figure = new Square(x, y, a, color);
+            std::cout << "Area of the figure : " << figure->giveOutArea() << std::endl;
+            std::cout << "Rectangle describing the figure: ";
+            figure->find_rectangle();
+            std::cout << "Figure color: " << figure->get_color() << std::endl;
+        } else if (s == "triangle") {
+            std::cout << "Enter the coordinates of the shape's center and side length:\n";
+            int x, y, l; std::cin >> x >> y >> l;
+            std::cout << "Enter the color of the shape: (\"Red\", \"Blue\", \"Green\", Yellow\")\n";
+            std::string color; std::cin >> color;
+            Triangle* figure = new Triangle(x, y, l, color);
+            std::cout << "Area of the figure : " << figure->giveOutArea() << std::endl;
+            std::cout << "Rectangle describing the figure: ";
+            figure->find_rectangle();
+            std::cout << "Figure color: " << figure->get_color() << std::endl;
+        } else if (s == "rectangle") {
+            std::cout << "Enter the coordinates of the shape center and width, height: \n";
+            int x, y, a, b; std::cin >> x >> y >> a >> b;
+            std::cout << "Enter the color of the shape: (\"Red\", \"Blue\", \"Green\", Yellow\")\n";
+            std::string color; std::cin >> color;
+            Rectangle *figure = new Rectangle(x, y, a, b, color);
+            std::cout << "Area of the figure : " << figure->giveOutArea() << std::endl;
+            std::cout << "Rectangle describing the figure: ";
+            figure->find_rectangle();
+            std::cout << "Figure color: " << figure->get_color() << std::endl;
+        } else {
+            std::cout << "Wrong command!\n";
+        }
+    }
+}
